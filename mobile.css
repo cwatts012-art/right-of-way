@@ -1,0 +1,67 @@
+/* Right of Way — touch/phone/tablet layout. Desktop (fine pointer, >=800px) is untouched. */
+#zoomBar{display:none}
+#drawerToggle{display:none}
+.ttip{position:fixed;left:8px;right:8px;bottom:calc(var(--tabh,0px) + 10px);background:#1d3557;color:#fff;padding:10px 12px;border-radius:10px;font-size:14px;z-index:40;box-shadow:0 4px 16px #0006;display:none}
+.ttip.on{display:block}
+/* ---------- shared touch rules (phone + tablet) ---------- */
+@media (max-width:799px), (pointer:coarse) and (max-width:1199px){
+  html,body{overflow-x:hidden;max-width:100vw}
+  body{-webkit-text-size-adjust:100%}
+  button,select,input[type=text],input[type=number]{min-height:44px;min-width:44px}
+  button.small{min-height:44px;padding:4px 10px}
+  .zgrid .zbtn{font-size:13px;padding:6px 8px}
+  .tok,.sd,[title]:not(button){cursor:pointer}
+  #board{touch-action:none;-webkit-user-select:none}
+  #zoomBar{display:flex;gap:6px;position:absolute;right:12px;top:12px;z-index:3}
+  #zoomBar button{background:#fffe;font-size:18px;padding:0;width:44px;height:44px}
+  #boardWrap{position:relative}
+  .modal{padding:8px}
+  .modal-box{padding:12px;max-width:100%}
+  .setupRow{grid-template-columns:24px 1fr 1fr;}
+  .setupRow>*:nth-child(4){grid-column:2 / -1}
+  .grid2{grid-template-columns:1fr}
+  table.bd{display:block;overflow-x:auto}
+  .modal-box img,.modal-box svg{max-width:100%;height:auto}
+}
+/* ---------- phone + tablet portrait: board on top, bottom tab drawer ---------- */
+@media (max-width:799px), (pointer:coarse) and (orientation:portrait) and (max-width:1199px){
+  :root{--tabh:56px}
+  #topbar{flex-wrap:wrap;gap:4px 8px;padding:6px 8px}
+  .brand{font-size:15px}.brand .sub{display:none}
+  #status{flex:1 1 100%;order:3;font-size:12px}
+  .topbtns{display:flex;gap:4px;flex-wrap:wrap}
+  .topbtns button{margin:0;padding:4px 8px;font-size:13px}
+  #main{display:block;padding:6px;padding-bottom:calc(var(--tabh) + 8px)}
+  #boardWrap{padding:4px;width:100%}
+  #board{width:100%;height:auto;aspect-ratio:1/1}
+  #legend{max-width:100%}
+  #side{min-width:0;max-width:none;width:100%}
+  #tabs{position:fixed;left:0;right:0;bottom:0;z-index:15;margin:0;background:var(--ink);padding:6px;gap:4px;height:var(--tabh);padding-bottom:max(6px,env(safe-area-inset-bottom))}
+  #tabs button{flex:1;background:transparent;color:#fff;border-color:#6b84a8;font-size:13px;padding:0 4px}
+  #tabs button.on{background:#fff;color:var(--ink)}
+  .tab{position:fixed;left:0;right:0;bottom:var(--tabh);z-index:14;max-height:48vh;border-radius:14px 14px 0 0;box-shadow:0 -6px 20px #0003;overscroll-behavior:contain}
+  body.drawer-closed .tab{display:none !important}
+  #drawerToggle{display:block;position:sticky;top:-10px;margin:-10px -10px 6px;width:calc(100% + 20px);min-height:28px;border:0;border-radius:14px 14px 0 0;background:#eee8dc;font-size:12px;color:var(--muted);z-index:2}
+}
+/* tablet portrait: drawer can be a bit taller */
+@media (pointer:coarse) and (orientation:portrait) and (min-width:700px) and (max-width:1199px){
+  .tab{max-height:40vh}
+  #board{max-height:calc(60vh - 90px);width:auto;margin:0 auto}
+}
+/* ---------- tablet landscape: board + collapsible side panel ---------- */
+@media (pointer:coarse) and (orientation:landscape) and (min-width:800px) and (max-width:1199px){
+  #main{gap:8px;padding:6px}
+  #boardWrap{flex:1 1 auto;min-width:0}
+  #board{width:100%;height:calc(100vh - 140px);max-height:none}
+  #side{flex:0 0 360px;min-width:0;max-width:360px}
+  body.drawer-closed #side{flex-basis:56px}
+  body.drawer-closed #side .tab{display:none !important}
+  body.drawer-closed #tabs{flex-direction:column}
+  body.drawer-closed #tabs button:not(#sideToggle){font-size:0;padding:0}
+  body.drawer-closed #tabs button:not(#sideToggle)::first-letter{font-size:14px}
+  .tab{max-height:calc(100vh - 120px)}
+  #tabs{flex-wrap:wrap}
+  .brand .sub{display:none}
+}
+#sideToggle{display:none}
+@media (pointer:coarse) and (orientation:landscape) and (min-width:800px) and (max-width:1199px){#sideToggle{display:inline-block}}
